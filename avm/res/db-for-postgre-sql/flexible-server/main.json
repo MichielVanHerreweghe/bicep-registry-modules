@@ -6,7 +6,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.27.1.19265",
-      "templateHash": "13259249479511704758"
+      "templateHash": "3505623598505673542"
     },
     "name": "DBforPostgreSQL Flexible Servers",
     "description": "This module deploys a DBforPostgreSQL Flexible Server.",
@@ -408,7 +408,7 @@
       "type": "int",
       "defaultValue": 120,
       "metadata": {
-        "description": "Optional. Storage tier IOPS quantity. This property is required to be set for storage Type PremiumV2_LRS"
+        "description": "Optional. Storage tier IOPS quantity. This property is required to be set for storage Type PremiumV2_LRS."
       }
     },
     "storageAutoGrow": {
@@ -426,7 +426,7 @@
       "type": "int",
       "nullable": true,
       "metadata": {
-        "description": "Optional. Storage throughput for the server. This is required to be set for storage Type PremiumV2_LRS"
+        "description": "Optional. Storage throughput for the server. This is required to be set for storage Type PremiumV2_LRS."
       }
     },
     "storageTier": {

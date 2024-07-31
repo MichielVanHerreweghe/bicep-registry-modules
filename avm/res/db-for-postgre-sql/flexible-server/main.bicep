@@ -83,7 +83,7 @@ param geoRedundantBackup string = 'Disabled'
 @description('Optional. Max storage allowed for a server.')
 param storageSizeGB int = 32
 
-@description('Optional. Storage tier IOPS quantity. This property is required to be set for storage Type PremiumV2_LRS')
+@description('Optional. Storage tier IOPS quantity. This property is required to be set for storage Type PremiumV2_LRS.')
 param storageIops int = 120
 
 @description('Optional. Flag to enable / disable Storage Auto grow for flexible server.')
@@ -93,7 +93,7 @@ param storageIops int = 120
 ])
 param storageAutoGrow string = 'Disabled'
 
-@description('Optional. Storage throughput for the server. This is required to be set for storage Type PremiumV2_LRS')
+@description('Optional. Storage throughput for the server. This is required to be set for storage Type PremiumV2_LRS.')
 param storageThroughput int?
 
 @allowed([

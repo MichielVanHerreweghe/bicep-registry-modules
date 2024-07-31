@@ -848,9 +848,9 @@ module flexibleServer 'br/public:avm/res/db-for-postgre-sql/flexible-server:<ver
 | [`privateDnsZoneArmResourceId`](#parameter-privatednszonearmresourceid) | string | Private dns zone arm resource ID. Used when the desired connectivity mode is 'Private Access' and required when 'delegatedSubnetResourceId' is used. The Private DNS Zone must be lined to the Virtual Network referenced in 'delegatedSubnetResourceId'. |
 | [`roleAssignments`](#parameter-roleassignments) | array | Array of role assignments to create. |
 | [`storageAutoGrow`](#parameter-storageautogrow) | string | Flag to enable / disable Storage Auto grow for flexible server. |
-| [`storageIops`](#parameter-storageiops) | int | Storage tier IOPS quantity. This property is required to be set for storage Type PremiumV2_LRS |
+| [`storageIops`](#parameter-storageiops) | int | Storage tier IOPS quantity. This property is required to be set for storage Type PremiumV2_LRS. |
 | [`storageSizeGB`](#parameter-storagesizegb) | int | Max storage allowed for a server. |
-| [`storageThroughput`](#parameter-storagethroughput) | int | Storage throughput for the server. This is required to be set for storage Type PremiumV2_LRS |
+| [`storageThroughput`](#parameter-storagethroughput) | int | Storage throughput for the server. This is required to be set for storage Type PremiumV2_LRS. |
 | [`storageTier`](#parameter-storagetier) | string | Name of storage tier for IOPS. |
 | [`storageType`](#parameter-storagetype) | string | Storage type for the server. |
 | [`tags`](#parameter-tags) | object | Tags of the resource. |
@@ -1450,7 +1450,7 @@ Flag to enable / disable Storage Auto grow for flexible server.
 
 ### Parameter: `storageIops`
 
-Storage tier IOPS quantity. This property is required to be set for storage Type PremiumV2_LRS
+Storage tier IOPS quantity. This property is required to be set for storage Type PremiumV2_LRS.
 
 - Required: No
 - Type: int
@@ -1481,7 +1481,7 @@ Max storage allowed for a server.
 
 ### Parameter: `storageThroughput`
 
-Storage throughput for the server. This is required to be set for storage Type PremiumV2_LRS
+Storage throughput for the server. This is required to be set for storage Type PremiumV2_LRS.
 
 - Required: No
 - Type: int
