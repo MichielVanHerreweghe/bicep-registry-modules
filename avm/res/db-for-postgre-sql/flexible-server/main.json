@@ -5,8 +5,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.28.1.47646",
-      "templateHash": "6917599378543885817"
+      "version": "0.27.1.19265",
+      "templateHash": "13259249479511704758"
     },
     "name": "DBforPostgreSQL Flexible Servers",
     "description": "This module deploys a DBforPostgreSQL Flexible Server.",
@@ -404,6 +404,65 @@
         "description": "Optional. Max storage allowed for a server."
       }
     },
+    "storageIops": {
+      "type": "int",
+      "defaultValue": 120,
+      "metadata": {
+        "description": "Optional. Storage tier IOPS quantity. This property is required to be set for storage Type PremiumV2_LRS"
+      }
+    },
+    "storageAutoGrow": {
+      "type": "string",
+      "defaultValue": "Disabled",
+      "allowedValues": [
+        "Disabled",
+        "Enabled"
+      ],
+      "metadata": {
+        "description": "Optional. Flag to enable / disable Storage Auto grow for flexible server."
+      }
+    },
+    "storageThroughput": {
+      "type": "int",
+      "nullable": true,
+      "metadata": {
+        "description": "Optional. Storage throughput for the server. This is required to be set for storage Type PremiumV2_LRS"
+      }
+    },
+    "storageTier": {
+      "type": "string",
+      "defaultValue": "P4",
+      "allowedValues": [
+        "P1",
+        "P10",
+        "P15",
+        "P2",
+        "P20",
+        "P3",
+        "P30",
+        "P4",
+        "P40",
+        "P50",
+        "P6",
+        "P60",
+        "P70",
+        "P80"
+      ],
+      "metadata": {
+        "description": "Optional. Name of storage tier for IOPS."
+      }
+    },
+    "storageType": {
+      "type": "string",
+      "defaultValue": "Premium_LRS",
+      "allowedValues": [
+        "PremiumV2_LRS",
+        "Premium_LRS"
+      ],
+      "metadata": {
+        "description": "Optional. Storage type for the server."
+      }
+    },
     "version": {
       "type": "string",
       "defaultValue": "15",
@@ -608,7 +667,7 @@
     },
     "flexibleServer": {
       "type": "Microsoft.DBforPostgreSQL/flexibleServers",
-      "apiVersion": "2022-12-01",
+      "apiVersion": "2023-12-01-preview",
       "name": "[parameters('name')]",
       "location": "[parameters('location')]",
       "tags": "[parameters('tags')]",
@@ -641,7 +700,12 @@
         "pointInTimeUTC": "[if(equals(parameters('createMode'), 'PointInTimeRestore'), parameters('pointInTimeUTC'), null())]",
         "sourceServerResourceId": "[if(equals(parameters('createMode'), 'PointInTimeRestore'), parameters('sourceServerResourceId'), null())]",
         "storage": {
-          "storageSizeGB": "[parameters('storageSizeGB')]"
+          "autoGrow": "[parameters('storageAutoGrow')]",
+          "iops": "[parameters('storageIops')]",
+          "storageSizeGB": "[parameters('storageSizeGB')]",
+          "throughput": "[parameters('storageThroughput')]",
+          "tier": "[parameters('storageTier')]",
+          "type": "[parameters('storageType')]"
         },
         "version": "[parameters('version')]"
       },
@@ -756,8 +820,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.28.1.47646",
-              "templateHash": "6060199938382421423"
+              "version": "0.27.1.19265",
+              "templateHash": "16298739023352550820"
             },
             "name": "DBforPostgreSQL Flexible Server Databases",
             "description": "This module deploys a DBforPostgreSQL Flexible Server Database.",
@@ -864,8 +928,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.28.1.47646",
-              "templateHash": "18047073594923038356"
+              "version": "0.27.1.19265",
+              "templateHash": "9460705052782499585"
             },
             "name": "DBforPostgreSQL Flexible Server Firewall Rules",
             "description": "This module deploys a DBforPostgreSQL Flexible Server Firewall Rule.",
@@ -969,8 +1033,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.28.1.47646",
-              "templateHash": "1739518705583408324"
+              "version": "0.27.1.19265",
+              "templateHash": "2304112072758499059"
             },
             "name": "DBforPostgreSQL Flexible Server Configurations",
             "description": "This module deploys a DBforPostgreSQL Flexible Server Configuration.",
@@ -1079,8 +1143,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.28.1.47646",
-              "templateHash": "18164580138640455419"
+              "version": "0.27.1.19265",
+              "templateHash": "7504205001896588220"
             },
             "name": "DBforPostgreSQL Flexible Server Administrators",
             "description": "This module deploys a DBforPostgreSQL Flexible Server Administrator.",
@@ -1194,7 +1258,7 @@
       "metadata": {
         "description": "The location the resource was deployed into."
       },
-      "value": "[reference('flexibleServer', '2022-12-01', 'full').location]"
+      "value": "[reference('flexibleServer', '2023-12-01-preview', 'full').location]"
     },
     "fqdn": {
       "type": "string",

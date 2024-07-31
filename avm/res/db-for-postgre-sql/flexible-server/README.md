@@ -17,7 +17,7 @@ This module deploys a DBforPostgreSQL Flexible Server.
 | :-- | :-- |
 | `Microsoft.Authorization/locks` | [2020-05-01](https://learn.microsoft.com/en-us/azure/templates/Microsoft.Authorization/2020-05-01/locks) |
 | `Microsoft.Authorization/roleAssignments` | [2022-04-01](https://learn.microsoft.com/en-us/azure/templates/Microsoft.Authorization/2022-04-01/roleAssignments) |
-| `Microsoft.DBforPostgreSQL/flexibleServers` | [2022-12-01](https://learn.microsoft.com/en-us/azure/templates/Microsoft.DBforPostgreSQL/2022-12-01/flexibleServers) |
+| `Microsoft.DBforPostgreSQL/flexibleServers` | [2023-12-01-preview](https://learn.microsoft.com/en-us/azure/templates/Microsoft.DBforPostgreSQL/2023-12-01-preview/flexibleServers) |
 | `Microsoft.DBforPostgreSQL/flexibleServers/administrators` | [2022-12-01](https://learn.microsoft.com/en-us/azure/templates/Microsoft.DBforPostgreSQL/2022-12-01/flexibleServers/administrators) |
 | `Microsoft.DBforPostgreSQL/flexibleServers/configurations` | [2022-12-01](https://learn.microsoft.com/en-us/azure/templates/Microsoft.DBforPostgreSQL/2022-12-01/flexibleServers/configurations) |
 | `Microsoft.DBforPostgreSQL/flexibleServers/databases` | [2022-12-01](https://learn.microsoft.com/en-us/azure/templates/Microsoft.DBforPostgreSQL/2022-12-01/flexibleServers/databases) |
@@ -847,7 +847,12 @@ module flexibleServer 'br/public:avm/res/db-for-postgre-sql/flexible-server:<ver
 | [`passwordAuth`](#parameter-passwordauth) | string | If Enabled, password authentication is enabled. |
 | [`privateDnsZoneArmResourceId`](#parameter-privatednszonearmresourceid) | string | Private dns zone arm resource ID. Used when the desired connectivity mode is 'Private Access' and required when 'delegatedSubnetResourceId' is used. The Private DNS Zone must be lined to the Virtual Network referenced in 'delegatedSubnetResourceId'. |
 | [`roleAssignments`](#parameter-roleassignments) | array | Array of role assignments to create. |
+| [`storageAutoGrow`](#parameter-storageautogrow) | string | Flag to enable / disable Storage Auto grow for flexible server. |
+| [`storageIops`](#parameter-storageiops) | int | Storage tier IOPS quantity. This property is required to be set for storage Type PremiumV2_LRS |
 | [`storageSizeGB`](#parameter-storagesizegb) | int | Max storage allowed for a server. |
+| [`storageThroughput`](#parameter-storagethroughput) | int | Storage throughput for the server. This is required to be set for storage Type PremiumV2_LRS |
+| [`storageTier`](#parameter-storagetier) | string | Name of storage tier for IOPS. |
+| [`storageType`](#parameter-storagetype) | string | Storage type for the server. |
 | [`tags`](#parameter-tags) | object | Tags of the resource. |
 | [`tenantId`](#parameter-tenantid) | string | Tenant id of the server. |
 | [`version`](#parameter-version) | string | PostgreSQL Server version. |
@@ -1428,6 +1433,29 @@ The principal type of the assigned principal ID.
   ]
   ```
 
+### Parameter: `storageAutoGrow`
+
+Flag to enable / disable Storage Auto grow for flexible server.
+
+- Required: No
+- Type: string
+- Default: `'Disabled'`
+- Allowed:
+  ```Bicep
+  [
+    'Disabled'
+    'Enabled'
+  ]
+  ```
+
+### Parameter: `storageIops`
+
+Storage tier IOPS quantity. This property is required to be set for storage Type PremiumV2_LRS
+
+- Required: No
+- Type: int
+- Default: `120`
+
 ### Parameter: `storageSizeGB`
 
 Max storage allowed for a server.
@@ -1448,6 +1476,55 @@ Max storage allowed for a server.
     4096
     8192
     16384
+  ]
+  ```
+
+### Parameter: `storageThroughput`
+
+Storage throughput for the server. This is required to be set for storage Type PremiumV2_LRS
+
+- Required: No
+- Type: int
+
+### Parameter: `storageTier`
+
+Name of storage tier for IOPS.
+
+- Required: No
+- Type: string
+- Default: `'P4'`
+- Allowed:
+  ```Bicep
+  [
+    'P1'
+    'P10'
+    'P15'
+    'P2'
+    'P20'
+    'P3'
+    'P30'
+    'P4'
+    'P40'
+    'P50'
+    'P6'
+    'P60'
+    'P70'
+    'P80'
+  ]
+  ```
+
+### Parameter: `storageType`
+
+Storage type for the server.
+
+- Required: No
+- Type: string
+- Default: `'Premium_LRS'`
+- Allowed:
+  ```Bicep
+  [
+    'Premium_LRS'
+    'PremiumV2_LRS'
   ]
   ```
 
