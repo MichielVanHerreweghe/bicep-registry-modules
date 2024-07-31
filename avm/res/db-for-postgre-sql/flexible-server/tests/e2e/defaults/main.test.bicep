@@ -50,7 +50,7 @@ module testDeployment '../../../main.bicep' = [
       administratorLogin: 'adminUserName'
       administratorLoginPassword: password
       skuName: 'Standard_B2s'
-      tier: 'Burstable'
+      tier: 'GeneralPurpose'
       geoRedundantBackup: 'Enabled'
       highAvailability: 'ZoneRedundant'
       maintenanceWindow: {
