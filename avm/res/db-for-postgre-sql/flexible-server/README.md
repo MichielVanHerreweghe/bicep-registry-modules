@@ -509,6 +509,7 @@ module flexibleServer 'br/public:avm/res/db-for-postgre-sql/flexible-server:<ver
       }
     ]
     storageSizeGB: 1024
+    storageTier: 'P30'
     tags: {
       Environment: 'Non-Prod'
       'hidden-title': 'This is visible in the resource name'
@@ -640,6 +641,9 @@ module flexibleServer 'br/public:avm/res/db-for-postgre-sql/flexible-server:<ver
     },
     "storageSizeGB": {
       "value": 1024
+    },
+    "storageTier": {
+      "value": "P30"
     },
     "tags": {
       "value": {
