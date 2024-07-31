@@ -70,6 +70,12 @@ module testDeployment '../../../main.bicep' = [
       name: '${namePrefix}${serviceShort}001'
       location: resourceLocation
       highAvailability: 'ZoneRedundant'
+      maintenanceWindow: {
+        customWindow: 'Enabled'
+        dayOfWeek: 1
+        startHour: 1
+        startMinute: 0
+      }
       administrators: [
         {
           objectId: nestedDependencies.outputs.managedIdentityClientId
