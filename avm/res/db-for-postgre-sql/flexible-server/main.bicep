@@ -83,6 +83,45 @@ param geoRedundantBackup string = 'Disabled'
 @description('Optional. Max storage allowed for a server.')
 param storageSizeGB int = 32
 
+@description('Optional. Storage tier IOPS quantity. This property is required to be set for storage Type PremiumV2_LRS')
+param storageIops int = 120
+
+@description('Optional. Flag to enable / disable Storage Auto grow for flexible server.')
+@allowed([
+  'Disabled'
+  'Enabled'
+])
+param storageAutoGrow string = 'Disabled'
+
+@description('Optional. Storage throughput for the server. This is required to be set for storage Type PremiumV2_LRS')
+param storageThroughput int?
+
+@allowed([
+  'P1'
+  'P10'
+  'P15'
+  'P2'
+  'P20'
+  'P3'
+  'P30'
+  'P4'
+  'P40'
+  'P50'
+  'P6'
+  'P60'
+  'P70'
+  'P80'
+])
+@description('Optional. Name of storage tier for IOPS.')
+param storageTier string = 'P4'
+
+@allowed([
+  'PremiumV2_LRS'
+  'Premium_LRS'
+])
+@description('Optional. Storage type for the server.')
+param storageType string = 'Premium_LRS'
+
 @allowed([
   '11'
   '12'
@@ -221,7 +260,7 @@ resource cMKUserAssignedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentiti
   )
 }
 
-resource flexibleServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' = {
+resource flexibleServer 'Microsoft.DBforPostgreSQL/flexibleServers@2023-12-01-preview' = {
   name: name
   location: location
   tags: tags
@@ -274,7 +313,12 @@ resource flexibleServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' =
     pointInTimeUTC: createMode == 'PointInTimeRestore' ? pointInTimeUTC : null
     sourceServerResourceId: createMode == 'PointInTimeRestore' ? sourceServerResourceId : null
     storage: {
+      autoGrow: storageAutoGrow
+      iops: storageIops
       storageSizeGB: storageSizeGB
+      throughput: storageThroughput
+      tier: storageTier
+      type: storageType
     }
     version: version
   }
