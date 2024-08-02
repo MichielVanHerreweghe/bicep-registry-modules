@@ -12,7 +12,7 @@ metadata description = 'This instance deploys the module using Customer-Managed-
 param resourceGroupName string = 'dep-${namePrefix}-dbforpostgresql.flexibleservers-${serviceShort}-rg'
 
 @description('Optional. The location to deploy resources to.')
-param resourceLocation string = deployment().location
+param resourceLocation string = 'eastus'
 
 @description('Optional. A short identifier for the kind of deployment. Should be kept short to not run into resource-name length-constraints.')
 param serviceShort string = 'dfpsfse'
@@ -54,28 +54,30 @@ module nestedDependencies 'dependencies.bicep' = {
 // ============== //
 
 @batchSize(1)
-module testDeployment '../../../main.bicep' = [for iteration in [ 'init', 'idem' ]: {
-  scope: resourceGroup
-  name: '${uniqueString(deployment().name, resourceLocation)}-test-${serviceShort}-${iteration}'
-  params: {
-    name: '${namePrefix}${serviceShort}001'
-    location: resourceLocation
-    administratorLogin: 'adminUserName'
-    administratorLoginPassword: password
-    skuName: 'Standard_D2s_v3'
-    tier: 'GeneralPurpose'
-    customerManagedKey: {
-      keyName: nestedDependencies.outputs.keyName
-      keyVaultResourceId: nestedDependencies.outputs.keyVaultResourceId
-      userAssignedIdentityResourceId: nestedDependencies.outputs.managedIdentityResourceId
+module testDeployment '../../../main.bicep' = [
+  for iteration in ['init', 'idem']: {
+    scope: resourceGroup
+    name: '${uniqueString(deployment().name, resourceLocation)}-test-${serviceShort}-${iteration}'
+    params: {
+      name: '${namePrefix}${serviceShort}001'
+      location: resourceLocation
+      administratorLogin: 'adminUserName'
+      administratorLoginPassword: password
+      skuName: 'Standard_D2s_v3'
+      tier: 'GeneralPurpose'
+      customerManagedKey: {
+        keyName: nestedDependencies.outputs.keyName
+        keyVaultResourceId: nestedDependencies.outputs.keyVaultResourceId
+        userAssignedIdentityResourceId: nestedDependencies.outputs.managedIdentityResourceId
+      }
+      managedIdentities: {
+        userAssignedResourceIds: [
+          nestedDependencies.outputs.managedIdentityResourceId
+        ]
+      }
     }
-    managedIdentities: {
-      userAssignedResourceIds: [
-        nestedDependencies.outputs.managedIdentityResourceId
-      ]
-    }
+    dependsOn: [
+      nestedDependencies
+    ]
   }
-  dependsOn: [
-    nestedDependencies
-  ]
-}]
+]
